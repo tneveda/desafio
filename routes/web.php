@@ -20,5 +20,5 @@ Route::get('/', function () {
 
 
  
-Route::get('get_produtos', [ProdutoController::class, 'getProdutos']);
-Route::post('produtos', [ProdutoController::class, 'setProdutos']);
+Route::get('/get_produtos', [ProdutoController::class, 'getProdutos']);
+//Route::post('produtos', [ProdutoController::class, 'setProdutos']);
