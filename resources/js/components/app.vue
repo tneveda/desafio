@@ -1,85 +1,74 @@
 <template>
 
-    <div :id="blankID">
-
-        <div :id="tituloID" class="container">
-      <div class="row">
-          <div class="col-sm-6" ><h6>Ordem de Encomenda</h6></div>
-          <div class="col-sm-6" ><h6>Encomenda</h6></div>
-      </div>
-       <br>
-
-
-        <div class="row">
-          <div class="col-sm-6" >
+ <div :id="tituloID" class="container">
+  <div class="row">
+    <div class="col">
+        <div class="col-sm-6" ><h6><strong>Ordem de Encomenda</strong></h6>
+          <br>
+          <div class="form-group">
+            <div class="row">
+                 <div :id="ClienteID" class="col-sm-6" ><h6><strong>Nome do Cliente</strong> </h6></div>
+                 <div class="col-sm-6" >
+                    <input :id="selectId" type="text"  v-model="nome"  placeholder="Inserir nome do Cliente">
+                 </div>
+                 
+            </div>
+            <br>
 
             <div class="row">
-          <div :id="ClienteID" class="col-sm-6" ><h6>Nome do Cliente</h6></div>
-              <div class="col-sm-6" >
-        
-                <input v-model="nome"  placeholder="Inserir nome do Cliente">
-              
-              </div>
+                 <div :id="ClienteID" class="col-sm-6" ><h6><strong>Mail</strong></h6></div>
+                 <div class="col-sm-6" >
+                    <input :id="selectId"  type="text"  v-model="email"  placeholder="Inserir mail do Cliente">
+                 </div>
+            </div>
+            <br>
+             <div class="row">
+                  <div :id="ClienteID" class="col-sm-6"><h6><strong>Transportadora</strong></h6></div>
+                  <div :id="boxId" class="col-sm-6" >
+
+                            <select :id="selectId"  style="font-weight: bold;" v-model='transportadora' @change="onchange($event)">
+                                <option style="font-weight: bold;" value selected="DHL" >DHL</option>
+                                <option style="font-weight: bold;" value="CTT Express">CTT Express</option>
+                                <option style="font-weight: bold;" value="DPD">DPD</option>
+                                <option style="font-weight: bold;" value="Envialia">Envialia</option>
+                                <option style="font-weight: bold;" value="FedEx">FedEx</option>
+                                <option style="font-weight: bold;" value="GLS2">GLS2</option>
+                                <option style="font-weight: bold;" value="UPS">UPS</option>
+                            </select>
+                 </div>
+             </div>
           </div>
+                <br>
+                <br>
+                   <div :id="adicionarID" class="col-sm-9" ><h6><strong>Adicionar Produto</strong></h6></div>
+                   <br>
 
-       <div class="row">
-      <div :id="ClienteID" class="col-sm-6" ><h6>Email</h6></div>
-      <div class="col-sm-6" >
-        
-        <input :id="boxId" v-model="email" placeholder="Inserir email do Cliente">
-    </div>
-       </div>
+                   <div :id="selectProdutoID" class="row">
+                    <div class="col-sm-8">
 
-       <div class="row">
-      <div :id="ClienteID" class="col-sm-6" ><h6>Transportadora</h6></div>
-      <div :id="boxId" class="col-sm-6" >
-
-                            <select :id="selectId" class=' form-select form-control-sm' v-model='transportadora' @change="onchange($event)">
-                                <option value="DHL">DHL</option>
-                                <option value="CTT Express">CTT Express</option>
-                                <option value="DPD">DPD</option>
-                                <option value="Envialia">Envialia</option>
-                                <option value="FedEx">FedEx</option>
-                                <option value="GLS2">GLS2</option>
-                                <option value="UPS">UPS</option>
-                            </select>
-                        
-       
-
-     <!-- <h3 class="text-lg text-center font-bold mb-4">
-
-        <select name="transportadoraID" @change="onchange($event)" class="form-select form-control">
-  <option value="DHL">DHL</option>
-  <option value="CTT Express">CTT Express</option>
-  <option value="DPD">DPD</option>
-  <option value="Envialia">Envialia</option>
-  <option value="FedEx">FedEx</option>
-  <option value="GLS2">GLS2</option>
-  <option value="UPS">UPS</option>
-</select>
-</h3>-->
-
-    </div>
-    <div class="row">
-    <div :id="adicionarID" class="col-sm-9" ><h6>Adicionar Produto</h6></div>
-        <div :id="selectProdutoID" class="row">
-            <div :id="optionId" class="col-sm-6" >
-                            <select  :id="selectId"  class=' form-select form-control-md' v-model='produto' @change="onchangeProduct($event)">
+                      <select  :id="dropdownProdutoID" style="font-weight: bold;" v-model='produto' @change="onchangeProduct($event)">
                                 <option value='0' >Escolha o produto</option>
-                                <option v-for='data in produtos' :value='data.id'>{{ data.nome }} </option>
+                                <option v-for='data in produtos' :value='data.id'>{{ data.nome }} - {{ data.preco }} €</option>
                             </select>
-                        </div>
+                    </div>
+                    <div class="col-sm-4">
 
-    <div :id="qtdID" class="col-sm-3" >
-        
-        <input  v-model="novaCompra.qtd" placeholder="Qtd">
-    
+                      <input :id="qtdID" class="pull-right" type="number"  v-model="novaCompra.qtd" placeholder="Qtd.">
+                    </div>
+
+                   </div>
+                   
+              
+                      <br>
+                     <button :id="addTableID" :disabled="isDisabled" @click="addTable" ><strong> Adicionar à Encomenda </strong></button>
+                           
+        </div>
+             
+          
     </div>
-    <button :disabled="isDisabled" @click="addTable"> Add </button>
-       </div>
-       </div>
-       <br>
-       <div>
+    <div class="col">
+      <div class="col-sm-6" ><h6>Encomenda</h6></div>
+      <div :id="tableContainer">    
         <table class="table">
   <thead>
     <tr>
@@ -98,33 +87,20 @@
     </tr>
   </tbody>
 </table>
+
+<br>
 <button :disabled="isDisabled2" @click="sentMail"> Add </button>
-
-       </div>
-       {{output}}
-       
-       
-       </div>
-    
+      </div>
     </div>
-    <br>
 
+  </div>
+   
 
-
-
-          </div>
-          </div>
-        
-  
-  
-
-</div>
-
-  
+  </div>
 </template>
 
 <script>
-import emailjs from 'emailjs-com';
+
 
 export default{
 name:"app",
@@ -142,11 +118,13 @@ data() {
     ClienteID:"nomeCliente",
     selectId:"selectID",
     dropID:"drop",
+    dropdownProdutoID:"dropdownProdutoId",
     adicionarID:"adicionarId",
     selectProdutoID:"selectProduto",
     optionId:"optionId",
     qtdID:"qtdId",
     boxId:"boxId",
+    addTableID:"addTableId",
     produto: 0,
     produtos: [],
     produtoID:"",
@@ -157,6 +135,7 @@ data() {
     email:"",
     transportadora:"",
     output:"",
+    
 
   
 
@@ -171,6 +150,8 @@ data() {
     }
 }
 },
+
+
 
 methods: {
             getProdutos(){
@@ -194,7 +175,9 @@ methods: {
             sentMail(e) {
                 e.preventDefault();
                 var obj = this;
-                axios.post('/mail-send', {  
+
+          
+                axios.post('mail-send', {  
                     nome: this.nome,  
                     email: this.email,
                     transportadora: this.transportadora,
@@ -203,10 +186,12 @@ methods: {
                     obj.output = response.data;  
                 })  
                 .catch(function (error) {  
-                    obj.output = error;  
+                    obj.output = error.response.data;  
                 });   
-      
+              
                },
+
+           
         },
         created() {
             this.getProdutos()
@@ -215,11 +200,11 @@ methods: {
 computed:{
 
     isDisabled(){
-       return !(this.produto && this.novaCompra.qtd)
+      return (this.produto.length===0 || this.novaCompra.qtd.length===0 || this.novaCompra.qtd <=0)
  },
 
    isDisabled2(){
-       return (this.compras.length===0 || this.nome.length===0 || this.email.length===0)
+       return (this.compras.length===0 || this.nome.length===0 || /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.email)===false)
  }
 },
         
@@ -237,36 +222,53 @@ computed:{
 
 <style>
 
-#blank{
+.body{
     padding-top: 150px;
     padding-right: 250px;
     padding-left: 250px;
 }
 
-#nomeCliente{
-    padding-left: 30px;
-}
+#selectID{
+  width:300px;
+  height:40px;
+  font-size:15px;
+ 
 
+
+}
+#nomeCliente{
+    padding-left: 25px;
+    padding-top: 5px;
+}
 
 
 #titulo{
     background-color: #AAAAAA;
-    padding-top: 20px;
-    padding-left: 10px;
-    padding-bottom: 50px;
+    margin-top: 150px;
+    margin-left:150px;
+    margin-right: 200px;
+    padding-top: 30px;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: 30px;
+   
   
  }
 
 
  #selectProduto{
-  padding-left: 30px;
+  padding-left: 15px;
   
 
  }
+ #dropdownProdutoId{
+ width: 350px;
+ height:40px;
+ }
 
  #adicionarId{
-    padding-left: 30px;
-    padding-top: 50px;
+    padding-left: 15px;
+ 
  }
 
  #optionId{
@@ -274,7 +276,16 @@ computed:{
  }
 
  #qtdId{
-    width: 4px;
+  width: 90px;
+ margin-left: 150px;
+  height:40px;
+  
+ }
+ #addTableId{
+  background-color: #09afe7;
+  color: white;
+  margin-left: 15px;
+  width: 455px;
  }
 
 
