@@ -18,7 +18,7 @@
               <div class="col-sm-6" >
         
                 <input v-model="nome"  placeholder="Inserir nome do Cliente">
-                <p>{{ nome }}</p>
+              
               </div>
           </div>
 
@@ -26,8 +26,7 @@
       <div :id="ClienteID" class="col-sm-6" ><h6>Email</h6></div>
       <div class="col-sm-6" >
         
-        <input v-model="email" placeholder="Inserir email do Cliente">
-        <p>{{ email }}</p>
+        <input :id="boxId" v-model="email" placeholder="Inserir email do Cliente">
     </div>
        </div>
 
@@ -35,7 +34,7 @@
       <div :id="ClienteID" class="col-sm-6" ><h6>Transportadora</h6></div>
       <div :id="boxId" class="col-sm-6" >
 
-                            <select :id="selectId" class=' form-select form-control-md' v-model='transportadora' @change="onchange($event)">
+                            <select :id="selectId" class=' form-select form-control-sm' v-model='transportadora' @change="onchange($event)">
                                 <option value="DHL">DHL</option>
                                 <option value="CTT Express">CTT Express</option>
                                 <option value="DPD">DPD</option>
@@ -62,25 +61,47 @@
 
     </div>
     <div class="row">
-    <div :id="adicionarID" class="col-sm-6" ><h6>Adicionar Produto</h6></div>
+    <div :id="adicionarID" class="col-sm-9" ><h6>Adicionar Produto</h6></div>
         <div :id="selectProdutoID" class="row">
             <div :id="optionId" class="col-sm-6" >
-                            <select  :id="selectId"  class=' form-select form-control-md' v-model='produto' @change="onchange($event)">
+                            <select  :id="selectId"  class=' form-select form-control-md' v-model='produto' @change="onchangeProduct($event)">
                                 <option value='0' >Escolha o produto</option>
                                 <option v-for='data in produtos' :value='data.id'>{{ data.nome }} </option>
                             </select>
                         </div>
 
-    <div :id="qtdID" class="col-sm-6" >
+    <div :id="qtdID" class="col-sm-3" >
         
-        <input v-model="quantidade" placeholder="Qtd">
-        <p>{{ quantidade }}</p>
+        <input  v-model="novaCompra.qtd" placeholder="Qtd">
+    
     </div>
+    <button :disabled="isDisabled" @click="addTable"> Add </button>
        </div>
        </div>
        <br>
+       <div>
+        <table class="table">
+  <thead>
+    <tr>
+    
+      <th>Produto</th>
+      <th>Quantidade</th>
+      <th>Valor</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr v-for="c in compras">
+      
+      <td>{{c.nome}}</td>
+      <td>{{c.qtd}}</td>
+      <td>{{c.valor}}</td>
+    </tr>
+  </tbody>
+</table>
+<button :disabled="isDisabled2" @click="sentMail"> Add </button>
 
-       
+       </div>
+       {{output}}
        
        
        </div>
@@ -103,7 +124,7 @@
 </template>
 
 <script>
-
+import emailjs from 'emailjs-com';
 
 export default{
 name:"app",
@@ -114,6 +135,8 @@ components: {
 
 data() {
   return{
+    singleProduct :{
+              },
     blankID:"blank",
     tituloID:"titulo",
     ClienteID:"nomeCliente",
@@ -126,9 +149,25 @@ data() {
     boxId:"boxId",
     produto: 0,
     produtos: [],
+    produtoID:"",
+    choosed: "",
+    compras:[],
+    novaCompra: {nome:"", qtd:"", valor:""},
+    nome:"",
+    email:"",
+    transportadora:"",
+    output:"",
+
+  
 
     onchange(e){
         console.log(e.target.value);
+         
+    },
+
+    onchangeProduct(event){
+        this.choosed = event.target.value;
+         
     }
 }
 },
@@ -140,12 +179,51 @@ methods: {
                      .then((response)=>{
                        vm.produtos = response.data
                      })
-            }
+            },
+            addTable(){
+                var single = this
+                axios.get('/get_produtos/'+ single.choosed)
+                     .then((response)=>{
+                       single.compras.push({nome:response.data.nome,qtd:single.novaCompra.qtd,valor:(+(single.novaCompra.qtd*response.data.preco).toFixed(2))});
+                     single.novaCompra = {nome:"",qtd:"",valor:""};
+                     console.log(single.compras)
+                    
+                     })
+            },
+
+            sentMail(e) {
+                e.preventDefault();
+                var obj = this;
+                axios.post('/mail-send', {  
+                    nome: this.nome,  
+                    email: this.email,
+                    transportadora: this.transportadora,
+                    compras: this.compras 
+                }).then(function (response) {  
+                    obj.output = response.data;  
+                })  
+                .catch(function (error) {  
+                    obj.output = error;  
+                });   
+      
+               },
         },
         created() {
             this.getProdutos()
-        }
+            
+        },
+computed:{
 
+    isDisabled(){
+       return !(this.produto && this.novaCompra.qtd)
+ },
+
+   isDisabled2(){
+       return (this.compras.length===0 || this.nome.length===0 || this.email.length===0)
+ }
+},
+        
+       
 
 }
 
@@ -161,8 +239,8 @@ methods: {
 
 #blank{
     padding-top: 150px;
-    padding-right: 350px;
-    padding-left: 350px;
+    padding-right: 250px;
+    padding-left: 250px;
 }
 
 #nomeCliente{
@@ -174,17 +252,11 @@ methods: {
 #titulo{
     background-color: #AAAAAA;
     padding-top: 20px;
-    padding-left: 20px;
+    padding-left: 10px;
     padding-bottom: 50px;
   
  }
 
- #selectID{
-  
-  padding: 2px 7px;
-  border: none;
-
- }
 
  #selectProduto{
   padding-left: 30px;
@@ -202,8 +274,9 @@ methods: {
  }
 
  #qtdId{
-    width: 5px;
+    width: 4px;
  }
+
 
 
 

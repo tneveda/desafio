@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProdutoController;
+use App\Mail\ComprasMail;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,4 +22,18 @@ Route::get('/', function () {
 
  
 Route::get('/get_produtos', [ProdutoController::class, 'getProdutos']);
-//Route::post('produtos', [ProdutoController::class, 'setProdutos']);
+Route::get('/get_produtos/{id}', [ProdutoController::class, 'getProdutoById']);
+Route::post('/mail-send', [ProdutoController::class, 'mailSend']);
+
+/*Route::get('send-email', function(){
+       $data= [
+        "nome" => "TEST NAME",
+        "transportadora"=> "DHL"
+        
+       ];
+     Mail::to("example@mail.com")->send( new ComprasMail($data));
+     dd("Enviado");
+    }
+
+)*/
+?>
