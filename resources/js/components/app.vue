@@ -2,9 +2,9 @@
 
   <div :id="tituloID" class="container">
    <div class="row">
-     <div class="col">
-         <div :id="tituloSec" class="col-sm-6" ><h6><strong>Ordem de Encomenda</strong></h6>
-           <br>
+     <div :id="FormularioID" class="col">
+         <div  class="col-sm-6" font-size:14px ><h6><strong>Ordem de Encomenda</strong></h6>
+      
            <div class="form-group">
              <div class="row">
                   <div :id="ClienteID" class="col-sm-6" ><strong>Nome Cliente</strong></div>
@@ -16,15 +16,15 @@
              <br>
  
              <div class="row">
-                  <div :id="ClienteID" class="col-sm-6" ><h6><strong>Mail</strong></h6></div>
+                  <div :id="ClienteID" class="col-sm-6" ><strong>Mail</strong></div>
                   <div class="col-sm-6" >
                      <input :id="selectId"  type="text"  v-model="email"  placeholder="Inserir mail do Cliente">
                   </div>
              </div>
              <br>
               <div class="row">
-                   <div :id="ClienteID" class="col-sm-6"><h6><strong>Transportadora</strong></h6></div>
-                   <div :id="boxId" class="col-sm-6" >
+                   <div :id="ClienteID" class="col-sm-6"><strong>Transportadora</strong></div>
+                   <div  class="col-sm-6" >
  
                              <select :id="selectId"  style="font-weight: bold;" v-model='transportadora' @change="onchange($event)">
                                  <option style="font-weight: bold;" value selected="DHL" >DHL</option>
@@ -40,7 +40,7 @@
            </div>
                  <br>
                  <br>
-                    <div :id="adicionarID" class="col-sm-9" ><h6><strong>Adicionar Produto</strong></h6></div>
+                    <div class="col-sm-9" font-size:14px ><h6><strong>Adicionar Produto</strong></h6></div>
                     <br>
  
                     <div :id="selectProdutoID" class="row">
@@ -96,7 +96,7 @@
      </div>
  
    </div>
-    
+ 
  
    </div>
  </template>
@@ -126,6 +126,7 @@
      submit:"submit",
      tableContainer:"tableContainer",
      divSubmit:"divSubmit",
+     FormularioID:"formularioId",
      produto: 0,
      produtos: [],
      produtoID:"",
@@ -205,7 +206,11 @@
              sentMail(e) {
                  e.preventDefault();
                  var obj = this;
-                 console.log(obj.compras.nome)
+                 
+                var teste =JSON.stringify(this.compras)
+                var teste2 =  JSON.parse(teste)
+                console.log(teste2)
+                
                   console.log(this.soma)
                  alert("Concretizou a compra. Veja o seu email");
            
@@ -213,7 +218,7 @@
                      nome: this.nome,  
                      email: this.email,
                      transportadora: this.transportadora,
-                     compras: this.compras,
+                     compras: JSON.stringify(this.compras),
                      soma: this.soma,
                      
                     
@@ -223,7 +228,8 @@
                  .catch(function (error) {  
                      obj.output = error.response.data;  
                  });   
-                 this.compras="";
+                 this.compras=[];
+                
                 },
 
               
@@ -269,70 +275,69 @@
  }
  
  #selectID{
-   width:290px;
-   height:35px;
-   font-size:15px;
-   padding-left: 12px;
+   width:240px;
+   height:25px;
+   font-size:14px;
    margin-left: 50%;
+
   
  
  }
  #nomeCliente{
-     padding-left: 25px;
-     padding-top: 5px;
+
+
      width: 50%;
      font-size:14px;
+ }
+
+ #formularioId{
+  width: 50%;
  }
  
  
  #titulo{
      background-color: #AAAAAA;
      margin-top: 150px;
-     margin-left:200px;
      margin-right:350px;
      padding-top: 30px;
      padding-left: 70px;
      padding-right: 30px;
      padding-bottom: 70px;
-     width: 70%;
+     width: 65%;
      display:center
+     
      
     
    
   }
  
- 
- 
-  #selectProduto{
-   padding-left: 15px;
-   
- 
-  }
   #dropdownProdutoId{
-  width: 290px;
-  height:40px;
+  width:240px;
+  height:25px;
+  font-size:14px;
   }
  
-  #adicionarId{
-     padding-left: 15px;
-  
-  }
+
  
   #optionId{
      width: 250px;
+     font-size:14px;
   }
  
   #qtdId{
-   width: 160px;
+   width: 110px;
     margin-left: 130px;
-    height:40px;
+    height:25px;
+    font-size:14px;
    
   }
   #addTableId{
    background-color: #09afe7;
    color: white;
-   margin-left: 15px;
-   width: 450px;
+
+   width: 400px;
+   height:25px;
+   font-size: 14px;
    
   }
  
@@ -340,6 +345,7 @@
      border-collapse: collapse;
      border-style: hidden;
      border-bottom: 1px solid grey;
+     font-size: 14px;
  }
  
  table td, table th {
@@ -351,8 +357,10 @@
    background-color: #4CAF50;
    color: white;
    margin-left: 5px;
-   margin-bottom: 20px;
-   width: 450px;
+   margin-bottom: 95px;
+   width: 400px;
+   height:25px;
+   font-size: 14px;
    
    
    

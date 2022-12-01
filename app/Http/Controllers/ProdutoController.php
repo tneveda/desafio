@@ -42,13 +42,16 @@ class ProdutoController extends Controller
 
         $email = $request->email;
 
+     $temp = $request->compras;
+     $compras = json_decode($temp);
 
-        
+
 
         $data = [
             'nome' =>  $request->nome,
-            'transportadora' => $request->transportadora, 
-            'soma' => $request->soma
+            'transportadora' => $request->transportadora,
+            'soma' => $request->soma,
+             'compras'=>$compras
         ];
 
         Mail::to($email)->send(new ComprasMail($data));
@@ -57,11 +60,6 @@ class ProdutoController extends Controller
 
        return response()->json([$request->all()]);  
 
-       
-       
-   
-      /*  return response()->json([
-            'message' => 'Mail has sent.'
-        ], Response::HTTP_OK);*/
+
     }
 }

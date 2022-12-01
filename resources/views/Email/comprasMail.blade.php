@@ -32,6 +32,8 @@
 
     </head>
     <body>
+
+ 
    
     <tr>
     <div id="hosting" class="section wb" style="background: rgb(248, 248, 248)">
@@ -42,7 +44,7 @@
     <td text-align="center" valign="top" class="email-container">
 
 		<div>
-        <td text-align='center' style='text-align:center'><a href="http://127.0.0.1:8000/home" target="_blank">
+        <td text-align='center' style='text-align:center'>
                  
 		</div>
 		<br>
@@ -56,14 +58,37 @@
 					<br>
 					<div class="message-box">
 						<div class="widget-title">
-							<h3 style="color: #E62B36; font-family: Eczar;"><strong>Bom dia caro {{$data['nome']}}</strong></h3>
-                            <h4 text-align="center">  {{$data['transportadora']}}  </h4>
+							<h3 style="color: #E62B36;"><strong>Caro {{$data['nome']}}, a sua compra foi realizada com sucesso, valor total de  {{$data['soma']}}€.
+                                A encomenda chegará ao seu destino, através da transportadora {{$data['transportadora']}}. De seguida pode verificar o conteúdo da sua compra</strong></h3>
+                            <br>
+                            <br>
                    
-                           
-                        
-                            <h4 text-align="center">  {{$data['soma']}}  </h4>
-                            
-                              
+                            <div class="table-responsive">
+    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+    <thead style="text-align: center;">
+    <tr>
+    <th class="sorting_desc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 102px;" aria-sort="descending"></th>
+    <th>Nome</th>
+    <th>Qtd</th>
+    <th>Valor (€)</th>
+    
+    </tr>
+    </thead>
+    <tbody>
+    @foreach($data['compras'] as $compra)
+    <tr>
+    <td style="text-align: center; vertical-align: middle"></td>
+    <td style="text-align: center; vertical-align: middle">{{$compra->nome}}</td>
+    <td style="text-align: center; vertical-align: middle">{{$compra->qtd}}</td>
+    <td style="text-align: center; vertical-align: middle">{{$compra->valor}}</td>
+    
+    
+    </td>
+    </tr>
+    @endforeach
+    </tbody>
+        </table>
+             
 						</div>
 						<!-- end title -->
 						
