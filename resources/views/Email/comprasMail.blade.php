@@ -58,7 +58,10 @@
 						<div class="widget-title">
 							<h3 style="color: #E62B36; font-family: Eczar;"><strong>Bom dia caro {{$data['nome']}}</strong></h3>
                             <h4 text-align="center">  {{$data['transportadora']}}  </h4>
-                            
+                   
+                           
+                        
+                            <h4 text-align="center">  {{$data['soma']}}  </h4>
                             
                               
 						</div>

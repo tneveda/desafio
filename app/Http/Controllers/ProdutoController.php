@@ -41,11 +41,14 @@ class ProdutoController extends Controller
     public function mailSend(Request $request) {
 
         $email = $request->email;
+
+
         
 
         $data = [
             'nome' =>  $request->nome,
-            'transportadora' => $request->transportadora
+            'transportadora' => $request->transportadora, 
+            'soma' => $request->soma
         ];
 
         Mail::to($email)->send(new ComprasMail($data));
