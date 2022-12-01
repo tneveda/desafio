@@ -58,7 +58,7 @@
 					<br>
 					<div class="message-box">
 						<div class="widget-title">
-							<h3 style="color: #E62B36;"><strong>Caro {{$data['nome']}}, a sua compra foi realizada com sucesso, valor total de  {{$data['soma']}}€.
+							<h3 style="color: #E62B36;"><strong>Caro {{$data['nome']}}, a sua compra foi realizada com sucesso, no valor total de  {{$data['soma']}}€.
                                 A encomenda chegará ao seu destino, através da transportadora {{$data['transportadora']}}. De seguida pode verificar o conteúdo da sua compra</strong></h3>
                             <br>
                             <br>

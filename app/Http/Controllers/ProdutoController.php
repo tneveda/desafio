@@ -18,25 +18,22 @@ class ProdutoController extends Controller
     {
         $teste = Produtos::get();
 
-        $email = "tneveda@hotmail.com";
-        
-
-        $data = [
-            'nome' =>  "tiago",
-        ];
-
-    //  Mail::to($email)->send(new ComprasMail($data));
 
         return response()->json($teste);
     }
 
-
+// Retorna os dados de um produto, de acordo com o seu ID
     public function getProdutoById($id)
     {
     
         $data = Produtos::findOrFail($id);
         return response()->json($data);
     }
+
+    //Envia um email automático.  Como ao se criar um array em Vue.js, este torna-se um Proxy
+    //foi necessário torna-lo num array, de modo a poder ser acedido no template do email
+    // Dentro do Vue.js o Proxy foi tornado num string (atraves de um Stringify) e aqui o mesmo
+    // é tornado num array atraves do json_decode
 
     public function mailSend(Request $request) {
 

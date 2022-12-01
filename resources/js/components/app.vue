@@ -207,13 +207,12 @@
                  e.preventDefault();
                  var obj = this;
                  
-                var teste =JSON.stringify(this.compras)
-                var teste2 =  JSON.parse(teste)
-                console.log(teste2)
-                
+              
+
                   console.log(this.soma)
                  alert("Concretizou a compra. Veja o seu email");
-           
+           // foi necessário o stringify do array/Proxy compras, de modo a prepara-lo para ser acedido na
+           // parte do laravel
                  axios.post('mail-send', {  
                      nome: this.nome,  
                      email: this.email,
