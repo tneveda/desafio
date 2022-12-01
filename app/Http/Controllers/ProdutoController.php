@@ -16,10 +16,12 @@ class ProdutoController extends Controller
      */
     public function getProdutos()
     {
-        $teste = Produtos::get();
+        $data = Produtos::get();
+        
+        
 
 
-        return response()->json($teste);
+        return response()->json($data);
     }
 
 // Retorna os dados de um produto, de acordo com o seu ID
