@@ -356,7 +356,7 @@
    background-color: #4CAF50;
    color: white;
    margin-left: 5px;
-   margin-bottom: 95px;
+   margin-bottom: 40px;
    width: 400px;
    height:25px;
    font-size: 14px;
