@@ -335,7 +335,7 @@
    color: white;
 
    width: 400px;
-   height:25px;
+   height:27px;
    font-size: 14px;
    
   }
@@ -356,9 +356,9 @@
    background-color: #4CAF50;
    color: white;
    margin-left: 5px;
-   margin-bottom: 98px;
+   margin-bottom: 95px;
    width: 400px;
-   height:25px;
+   height:27px;
    font-size: 14px;
    
    
